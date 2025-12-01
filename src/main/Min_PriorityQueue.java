@@ -49,6 +49,10 @@ public class Min_PriorityQueue {
         queue.heapify(g);
     }
 
+    public boolean hasKey(GraphNode g){
+        return queue.hasNode(g);
+    }
+
     /**
      * Returns true if this queue is empty and false if not.
      * @return true if queue is empty

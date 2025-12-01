@@ -128,7 +128,7 @@ public class MinHeap {
      */
     public void heapify(GraphNode g){
         int index = map.getValue(g);
-        if(!isLeaf(index)){
+        if(!isLeaf(index) && index > 0){
             int swapIdx = index;
             if(right(index)<=heapSize && heap[right(index)] != null){
                 if(heap[left(index)].priority < heap[right(index)].priority){
@@ -170,7 +170,6 @@ public class MinHeap {
         if(heapSize >= 1){
             map.getEntry(heap[FRONT]).setValue(FRONT);
         }
-        map.getEntry(temp).setValue(-1);
         heap[heapSize + 1] = null;
         if(heapSize >= 1)
             heapify(heap[FRONT]);
@@ -186,6 +185,13 @@ public class MinHeap {
 
     public int getHeapSize(){
         return heapSize;
+    }
+
+    public boolean hasNode(GraphNode g){
+        if(map.hasKey(g)){
+            return true;
+        }
+        return false;
     }
 
     public String toString(){

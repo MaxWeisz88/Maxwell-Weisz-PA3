@@ -3,6 +3,7 @@ package main;
 public class Entry {
     private GraphNode key;
     private int value;
+    private int keysIndex;
 
     public Entry(GraphNode key, int value){
         this.key = key;
@@ -26,5 +27,13 @@ public class Entry {
             return true;
         }
         return false;
+    }
+
+    public void setKeysIndex(int keysIndex){
+        this.keysIndex = keysIndex;
+    }
+
+    public int getKeysIndex(){
+        return keysIndex;
     }
 }

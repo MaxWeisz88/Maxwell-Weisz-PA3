@@ -108,6 +108,7 @@ public class HashMap {
             int i = hashFunction(this.map, key.getId(), mapSize);
             map[i] = new Entry(key, value);
             keys[entries] = key;
+            map[i].setKeysIndex(entries);
             entries += 1;
             currentLF = (double)entries/mapSize;
         }
@@ -123,6 +124,13 @@ public class HashMap {
     public Entry getEntry(GraphNode key){
         Entry keysEntry = map[hashFunction(this.map, key.getId(), mapSize)];
         return keysEntry;
+    }
+
+    public void remove(GraphNode key){
+        Entry delEntry = getEntry(key);
+        map[hashFunction(map, key.getId(), mapSize)] = null;
+        keys[delEntry.getKeysIndex()] = null;
+        entries--;
     }
 
     /**
