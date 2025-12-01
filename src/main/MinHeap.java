@@ -30,7 +30,7 @@ public class MinHeap {
         heap[++heapSize] = g;
         int i = heapSize;
         map.set(g, i);
-        heapDecreaseKey(heap, heapSize, g, g.priority);
+        heapDecreaseKey(g, g.priority);
     }
 
     /**
@@ -106,13 +106,18 @@ public class MinHeap {
      * @param key the GraphNode whose priority is being decreased
      * @param newPriority the new priority value to change the GraphNode's priority to
      */
-    public void heapDecreaseKey(GraphNode[] heap, int size, GraphNode key, int newPriority){
+    public void heapDecreaseKey(GraphNode key, int newPriority){
         heap[map.getValue(key)].priority = newPriority;
-        int currentIndex = 0;
-        while(heap[parent(map.getValue(key))] != null && heap[map.getValue(key)].priority < heap[parent(map.getValue(key))].priority){
-            currentIndex = map.getValue(key);
-            swap(currentIndex, parent(currentIndex));
-            currentIndex = parent(currentIndex);
+        int currentIndex = map.getValue(key);
+        if(currentIndex <= 0 || currentIndex > heapSize){
+            return;
+        }
+        if(map.hasKey(key)){
+            while(currentIndex > FRONT
+            && heap[currentIndex].priority < heap[parent(currentIndex)].priority){
+                swap(currentIndex, parent(currentIndex));
+                currentIndex = parent(currentIndex);
+            }
         }
     }
 
@@ -146,6 +151,9 @@ public class MinHeap {
      * Returns the GraphNode at the top of the heap(the GraphNode with the lowest priority value).
      */
     public GraphNode getMin(){
+        if(heapSize == 0){
+            return null;
+        }
         return heap[FRONT];
     }
 
@@ -154,11 +162,18 @@ public class MinHeap {
      * top to maintain min-heap property. 
      */
     public void deleteMin(){
+        if(heapSize == 0){
+            return;
+        }
         GraphNode temp = heap[FRONT];
         heap[FRONT] = heap[heapSize--];
-        map.getEntry(getMin()).setValue(FRONT);
+        if(heapSize >= 1){
+            map.getEntry(heap[FRONT]).setValue(FRONT);
+        }
         map.getEntry(temp).setValue(-1);
-        heapify(heap[FRONT]);
+        heap[heapSize + 1] = null;
+        if(heapSize >= 1)
+            heapify(heap[FRONT]);
     }
 
     /**
@@ -171,5 +186,16 @@ public class MinHeap {
 
     public int getHeapSize(){
         return heapSize;
+    }
+
+    public String toString(){
+        String heapStr = "[";
+        if(heap[FRONT] != null){
+            heapStr += "1 " + heap[FRONT];
+        }
+        for(int i = 2; i <= heapSize; i++){
+            heapStr += ", "+ i + " " + heap[i];
+        }
+        return heapStr + "]";
     }
 }

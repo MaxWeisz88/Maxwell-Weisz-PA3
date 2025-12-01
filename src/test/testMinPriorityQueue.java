@@ -29,5 +29,52 @@ public class testMinPriorityQueue {
         assertEquals(queue.pullHighestPriorityElement(), testNode1);
         queue.insert(testNode3);
         assertEquals(queue.pullHighestPriorityElement(), testNode3);
+        testNode4.priority = 4;
+        testNode5.priority = 6;
+        testNode6.priority = 8;
+        testNode7.priority = 7;
+        queue.insert(testNode4);
+        queue.insert(testNode5);
+        queue.insert(testNode6);
+        queue.insert(testNode7);
+        assertEquals(queue.pullHighestPriorityElement(), testNode4);
+        assertEquals(queue.pullHighestPriorityElement(), testNode2);
+        assertEquals(queue.pullHighestPriorityElement(), testNode5);
+        assertEquals(queue.pullHighestPriorityElement(), testNode7);
+        assertEquals(queue.isEmpty(), false);
+        assertEquals(queue.pullHighestPriorityElement(), testNode6);
+        assertEquals(queue.isEmpty(), true);
+        assertEquals(queue.pullHighestPriorityElement(), null);//If queue is empty returns null
+    }
+
+    @Test
+    public void testExpandQueue(){
+        Min_PriorityQueue queue = new Min_PriorityQueue(3);
+        testNode1.priority = 4;
+        testNode2.priority = 7;
+        testNode3.priority = 3;
+        testNode4.priority = 5;
+        testNode5.priority = 2;
+        testNode6.priority = 8;
+        testNode7.priority = 1;
+        queue.insert(testNode1);
+        queue.insert(testNode2);
+        queue.insert(testNode3);
+        queue.insert(testNode4);//doubles for the first time
+        queue.insert(testNode5);
+        queue.insert(testNode6);
+        queue.insert(testNode7);//doubles again
+        assertEquals(queue.numElements(), 7);
+        assertEquals(queue.pullHighestPriorityElement(), testNode7);
+        assertEquals(queue.pullHighestPriorityElement(), testNode5);
+        assertEquals(queue.pullHighestPriorityElement(), testNode3);
+        assertEquals(queue.pullHighestPriorityElement(), testNode1);
+        assertEquals(queue.pullHighestPriorityElement(), testNode4);
+        assertEquals(queue.pullHighestPriorityElement(), testNode2);
+        assertEquals(queue.isEmpty(), false);
+        assertEquals(queue.pullHighestPriorityElement(), testNode6);
+        assertEquals(queue.isEmpty(), true);
+        assertEquals(queue.pullHighestPriorityElement(), null);
+        //Still holds the correct number of elements after expanding and returns null when empty
     }
 }
