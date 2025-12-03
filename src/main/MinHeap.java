@@ -165,7 +165,6 @@ public class MinHeap {
         if(heapSize == 0){
             return;
         }
-        GraphNode temp = heap[FRONT];
         heap[FRONT] = heap[heapSize--];
         if(heapSize >= 1){
             map.getEntry(heap[FRONT]).setValue(FRONT);

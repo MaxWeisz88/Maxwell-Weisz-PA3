@@ -1,12 +1,11 @@
 package main;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
-import java.io.IOException;
 
 public class FindMinPath {
     public static void main(String[] args) {
         Min_PriorityQueue queue = new Min_PriorityQueue();
-        GraphWrapper gw = new GraphWrapper(true);
+        GraphWrapper gw = new GraphWrapper();
         GraphNode home = gw.getHome();
         home.priority = 0;
         boolean foundHome = false;
@@ -21,10 +20,17 @@ public class FindMinPath {
                 addDistances(curr, queue);
             }
         }
+        Stack pathStack = new Stack();
         String path = "";
         while(answer.previousNode != null){
-            path += answer.previousDirection + "\n";
+            pathStack.push(answer.previousDirection);
             answer = answer.previousNode;//need to make this write the answer in reverse
+        }
+        if(!pathStack.isEmpty()){
+            path += pathStack.pop();
+        }
+        while(!pathStack.isEmpty()){
+            path += "\n" + pathStack.pop();
         }
         String outputFilepath = "src/main/answer.txt";
         try {
