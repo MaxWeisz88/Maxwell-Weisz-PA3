@@ -1,11 +1,18 @@
 package main;
 
 /**
- * 
+ * Simple HashMap capable of inserting key value pairs and retrieving them quickly with a hash
+ * function that uses the first eight characters in the UUID to set its index. If it already has
+ * a key that is not equal to the key being added, then it will use quadratic probing to find an
+ * open slot. Rehashes if necessary to expand the HashTable size after inserting a new element.
+ * @author Maxwell Weisz
+ * maxwellweisz@brandeis.edu
+ * 12/4/2025
+ * COSI 21A PA3
  */
 public class HashMap {
-    private static final int DEFAULT_SIZE = 16;
-    private static final double DEFAULT_LF = .6;
+    private static final int DEFAULT_SIZE = 157;
+    private static final double DEFAULT_LF = .67;
     private int mapSize;
     private int entries; 
     private double loadFactor = 0.00;
@@ -31,9 +38,11 @@ public class HashMap {
     }
 
     /**
-     * Hash function, given a UUID string this will return an int that is unique to that string. If there is a collision with two different keys 
-     * returning the same index, uses quadratic probing to find a free index in the map. Has a map field to put an array of Entry objects so that
-     * the rehash function can add to a new larger map without having out of bounds index errors in the old map.
+     * Hash function, given a UUID string this will return an int that is unique to that string. 
+     * If there is a collision with two different keys returning the same index, uses quadratic 
+     * probing to find a free index in the map. Has a map field to put an array of Entry objects 
+     * so that the rehash function can add to a new larger map without having out of bounds index 
+     * errors in the old map.
      * @param map the map that is being retrieved from or setting new entries in
      * @param key the UUID string corresponding to an entry
      * @param size the table size of the map being used
@@ -58,11 +67,18 @@ public class HashMap {
     }
 
     /**
-     * Creates a new map that is double the size of the current map, then adds the entries to the new map using the new size in the hash function.
-     * Also updates the array tracking the GraphNode keys, and size fields.
+     * Creates a new map that is double the size of the current map, unless the size is already over
+     * 64, then it makes it 1.5 times larger. Then adds the entries from the original map to the new
+     * map using the new size in the hash function. Also updates the array tracking the GraphNode 
+     * keys, and size fields.
      */
-    private void rehash(){
-        int biggerMapSize = mapSize * 2;
+    private void rehash(){      
+        int biggerMapSize = 0;
+        if(mapSize > 64){
+            biggerMapSize = (int)(mapSize * 1.5);
+        } else{
+            biggerMapSize = mapSize * 2;
+        }
         Entry[] temp = new Entry[biggerMapSize];
         GraphNode[] tempKeys = new GraphNode[biggerMapSize];
         int i = 0;
@@ -126,12 +142,12 @@ public class HashMap {
         return keysEntry;
     }
 
-    public void remove(GraphNode key){
-        Entry delEntry = getEntry(key);
-        map[hashFunction(map, key.getId(), mapSize)] = null;
-        keys[delEntry.getKeysIndex()] = null;
-        entries--;
-    }
+    // public void remove(GraphNode key){
+    //     Entry delEntry = getEntry(key);
+    //     map[hashFunction(map, key.getId(), mapSize)] = null;
+    //     keys[delEntry.getKeysIndex()] = null;
+    //     entries--;
+    // }
 
     /**
      * Given a GraphNode this returns true if the map already contains this key in an entry and false if there is no entry in the map with this

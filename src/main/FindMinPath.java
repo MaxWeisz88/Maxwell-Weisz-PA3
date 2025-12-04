@@ -2,6 +2,17 @@ package main;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 
+/**
+ * Main method using the PriorityQueue that combines all the data structures to build a priority
+ * queue that gives priority to the GraphNodes with the shortest distance. Finds the shortest path
+ * to the target GraphNode, and then prints out the order of directions taken using a stack thats
+ * built from the answer GraphNode.
+ * Known Bugs: None
+ * @author Maxwell Weisz
+ * maxwellweisz@brandeis.edu
+ * 12/4/2025
+ * COSI 21A PA3
+ */
 public class FindMinPath {
     public static void main(String[] args) {
         Min_PriorityQueue queue = new Min_PriorityQueue();
@@ -20,11 +31,15 @@ public class FindMinPath {
                 addDistances(curr, queue);
             }
         }
+        
         Stack pathStack = new Stack();
         String path = "";
+        if(!foundHome){
+            pathStack.push("No path found");
+        }
         while(answer.previousNode != null){
             pathStack.push(answer.previousDirection);
-            answer = answer.previousNode;//need to make this write the answer in reverse
+            answer = answer.previousNode;
         }
         if(!pathStack.isEmpty()){
             path += pathStack.pop();
@@ -42,7 +57,13 @@ public class FindMinPath {
         }
     }
 
-    public static void addDistances(GraphNode curr, Min_PriorityQueue queue){
+    /**
+     * Helper method to add/change the distances from the different GraphNodes this node is 
+     * connected to and add them to the queue if they are not already in the queue. 
+     * @param curr the current GraphNode to check the distances of connected nodes
+     * @param queue the queue that is being added to/having priorities changed
+     */
+    private static void addDistances(GraphNode curr, Min_PriorityQueue queue){
         if(curr.hasEast()){
             GraphNode east = curr.getEast();
             int dist = curr.priority + curr.getEastWeight();

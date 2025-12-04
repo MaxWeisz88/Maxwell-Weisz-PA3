@@ -1,6 +1,14 @@
 package main;
-
+/**
+ * Basic MinHeap class that is used by the Min_PriorityQueue class to build its queue. Supports 
+ * inserting, retrieving the top element, deleting the top element, decreasing priorities, etc. 
+ * @author Maxwell Weisz
+ * maxwellweisz@brandeis.edu
+ * 12/4/2025
+ * COSI 21A PA3
+ */
 public class MinHeap {
+    private static final int DEFAULT_SIZE = 11;
     public HashMap map;
     private GraphNode[] heap;
     private int heapSize;
@@ -8,7 +16,7 @@ public class MinHeap {
     private static final int FRONT = 1;
 
     public MinHeap(){
-        this(16);
+        this(DEFAULT_SIZE);
     }
 
     public MinHeap(int size){
@@ -182,10 +190,20 @@ public class MinHeap {
         return maxSize;
     }
 
+    /**
+     * Returns the size of this heap, the number of elements that are stored within it currently.
+     * @return heaps current size
+     */
     public int getHeapSize(){
         return heapSize;
     }
 
+    /**
+     * Returns true if this GraphNode is already in the heap by checking the map for the GraphNode
+     * passed as a key. 
+     * @param g GraphNode to check if in the heap
+     * @return true if in the heap, false otherwise
+     */
     public boolean hasNode(GraphNode g){
         if(map.hasKey(g)){
             return true;
@@ -193,6 +211,10 @@ public class MinHeap {
         return false;
     }
 
+    /**
+     * Returns this heap in String representation, prints the heap array and index number in 
+     * brackets.
+     */
     public String toString(){
         String heapStr = "[";
         if(heap[FRONT] != null){

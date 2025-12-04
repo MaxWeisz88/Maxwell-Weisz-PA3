@@ -29,12 +29,12 @@ public class testHashMap {
         testMap.set(new GraphNode("6bb67358-3761-455c-b283-2d309ca375e6", false), 5);
         testMap.set(new GraphNode("46af266f-5d0c-43a1-9f91-4b00ca25f6b3", false), 4);
         assertEquals(testMap.numEntries(), 4);
-        testMap.set(new GraphNode("4ba797c7-5b24-4577-82b6-ac39152c8423", false),7);
+        testMap.set(new GraphNode("4ba797c7-5b24-4577-82b6-ac39152c8423", false),7);//exceeds size so rehashes
         testMap.set(new GraphNode("a733a462-a578-4374-bdc3-920733a6eafc", false), 6);
         testMap.set(new GraphNode("d4b2fd29-6869-4a38-935b-2d537830e30b", false), 3);
         assertEquals(testMap.getValue(new GraphNode("d4b2fd29-6869-4a38-935b-2d537830e30b", false)), 3);
         assertEquals(testMap.getValue(new GraphNode("a733a462-a578-4374-bdc3-920733a6eafc", false)), 6);
-        assertEquals(testMap.getValue(new GraphNode("4ba797c7-5b24-4577-82b6-ac39152c8423", false)),7);
+        assertEquals(testMap.getValue(new GraphNode("4ba797c7-5b24-4577-82b6-ac39152c8423", false)), 7);
         assertEquals(testMap.getValue(new GraphNode("46af266f-5d0c-43a1-9f91-4b00ca25f6b3", false)), 4);
         assertEquals(testMap.getValue(new GraphNode("6bb67358-3761-455c-b283-2d309ca375e6", false)), 5);
         assertEquals(testMap.getValue(new GraphNode("30bede1a-11ce-4af2-b190-59082acce682", false)), 2);

@@ -1,7 +1,12 @@
 package main;
 
+/**
+ * Simple Min_PriorityQueue class using the MinHeap class to build a priority queue with the least
+ * distance at the front of the queue. Supports inserting elements into the queue, changing elements
+ * priority values, deleting elements, getting the top of the queue elements, etc. 
+ */
 public class Min_PriorityQueue {
-    private static final int DEFAULT_SIZE = 16;
+    private static final int DEFAULT_SIZE = 11;
     private int numElements;
     private MinHeap queue;
 
@@ -23,6 +28,16 @@ public class Min_PriorityQueue {
     public void insert(GraphNode g){
         queue.insert(g);
         numElements++;
+    }
+
+    /**
+     * Uses the MinHeap decreaseKey method to decrease the priority value of the GraphNode passed
+     * within the heap. 
+     * @param g GraphNode to decrease the priority of
+     * @param newPriority the new Priority to change it to
+     */
+    public void decreasePriority(GraphNode g, int newPriority){
+        queue.heapDecreaseKey(g, newPriority);
     }
 
     /**
@@ -49,13 +64,18 @@ public class Min_PriorityQueue {
         queue.heapify(g);
     }
 
+    /**
+     * Returns true if this queue has the GraphNode passed 
+     * @param g GraphNode to check if in the queue
+     * @return true if in the queue, false otherwise
+     */
     public boolean hasKey(GraphNode g){
         return queue.hasNode(g);
     }
 
     /**
      * Returns true if this queue is empty and false if not.
-     * @return true if queue is empty
+     * @return true if queue is empty, false otherwise
      */
     public boolean isEmpty(){
         if(numElements > 0){
@@ -64,6 +84,10 @@ public class Min_PriorityQueue {
         return true;
     }
 
+    /**
+     * Returns the current number of elements in the queue.
+     * @return current number of elements in queue
+     */
     public int numElements(){
         return numElements;
     }
